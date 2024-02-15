@@ -7,7 +7,7 @@ Puzzle Maze Adventure is currently in active development. I'm open to contributi
 
 ## 🚀 Roadmap
 
-Our roadmap includes:
+Roadmap includes:
 
 - 🧠 Expanding the number of levels and puzzles.
 - 👂 Incorporating player feedback to refine gameplay and mechanics.
