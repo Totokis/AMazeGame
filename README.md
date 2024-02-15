@@ -2,7 +2,7 @@
 
 ## Development and Contributions
 
-Puzzle Maze Adventure is currently in active development. We are open to contributions and feedback from the community. Whether you are a game designer, developer, artist, or just someone with great ideas, your input is welcome.
+Puzzle Maze Adventure is currently in active development. I'm open to contributions and feedback from the community. Whether you are a game designer, developer, artist, or just someone with great ideas, your input is welcome.
 
 
 ## 🚀 Roadmap
