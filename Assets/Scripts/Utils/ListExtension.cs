@@ -1,9 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+
 namespace Utils
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security.Cryptography;
-
     public static class ListExtension
     {
         public static void Shuffle<T>(this IList<T> list)
@@ -19,6 +19,21 @@ namespace Utils
                 n--;
                 (list[k], list[n]) = (list[n], list[k]);
             }
+        }
+    }
+
+    public static class CollectionExtension
+    {
+        private static readonly Random rng = new();
+
+        public static T RandomElementOrDefault<T>(this IList<T> list)
+        {
+            if (list != null && list.Count != 0)
+            {
+                return list[rng.Next(list.Count)];
+            }
+
+            return default;
         }
     }
 }
