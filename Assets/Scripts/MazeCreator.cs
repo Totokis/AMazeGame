@@ -12,6 +12,10 @@ public class MazeCreator : MonoBehaviour
     private GridGenerator gridGenerator;
 
     [SerializeField]
+    private Player player;
+    
+
+    [SerializeField]
     private GameObject northSouthWall;
 
     [SerializeField]
@@ -24,8 +28,12 @@ public class MazeCreator : MonoBehaviour
         var height = grid.GetLength(0);
         var width = grid.GetLength(1);
 
-        var maze = new RecursiveBacktrackingMaze().GetWallsAsCells(0,0,width,height);
+        var startX = 0;
+        var startY = 0;
+        var maze = new RecursiveBacktrackingMaze().GetWallsAsCells(startX,startY,width,height);
+        
 
+        var generatedMaze = new RecursiveBacktrackingMaze.Cell[width,height];
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -33,6 +41,7 @@ public class MazeCreator : MonoBehaviour
                 var position = grid[x,y].transform.position+new Vector3(0,0,-1.1f);
                 var mask = 0b1111;
                 var cell = ~maze[x, y] & (RecursiveBacktrackingMaze.Cell)mask; //wtf i just did here
+                generatedMaze[x, y] = cell;
                 switch (cell)
                 {
                     case RecursiveBacktrackingMaze.Cell.N:
@@ -114,14 +123,22 @@ public class MazeCreator : MonoBehaviour
                         WallW(grid,x,y);
                         break;
                     case RecursiveBacktrackingMaze.Cell.Empty:
+                        break;
                         
                     default:
-                        UnityEngine.Debug.LogError($"Enum throws for this: {cell}");
+                        Debug.LogError($"Enum throws for this: {cell}");
                         break;
+                    
                 }
                 
             }
         }
+        SetStartCellForPlayer(startX, startY, grid,generatedMaze);
+
+    }
+    private void SetStartCellForPlayer(int startX, int startY, GameObject[,] grid, RecursiveBacktrackingMaze.Cell[,] generatedMaze)
+    {
+        player.SetStartCell(startX,startY,grid,generatedMaze);
 
     }
     private void WallW(GameObject[,] grid, int x, int y)
