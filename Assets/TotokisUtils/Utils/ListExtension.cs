@@ -8,14 +8,17 @@ namespace Utils
     {
         public static void Shuffle<T>(this IList<T> list)
         {
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            int n = list.Count;
+            var provider = new RNGCryptoServiceProvider();
+            var n = list.Count;
             while (n > 1)
             {
-                byte[] box = new byte[1];
-                do provider.GetBytes(box);
-                while (!(box[0] < n * (Byte.MaxValue / n)));
-                int k = (box[0] % n);
+                var box = new byte[1];
+                do
+                {
+                    provider.GetBytes(box);
+                } while (!(box[0] < n * (byte.MaxValue / n)));
+
+                var k = box[0] % n;
                 n--;
                 (list[k], list[n]) = (list[n], list[k]);
             }
