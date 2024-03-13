@@ -11,6 +11,18 @@ public class CMPlayer : MonoBehaviour
 
     private bool _isWalking;
     private Vector3 _lastInteractionDir;
+    private ClearCounter _selectedCounter;
+    public static CMPlayer Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("There is more than one Player instance");
+        }
+
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -28,27 +40,14 @@ public class CMPlayer : MonoBehaviour
         return _isWalking;
     }
 
+    public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
+
     private void GameInputOnOnInteractAction(object sender, EventArgs e)
     {
-        var inputVector = gameInput.GetMovementVectorNormalized();
-        var moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
-        if (moveDir != Vector3.zero)
+        if (_selectedCounter)
         {
-            _lastInteractionDir = moveDir;
+            _selectedCounter.Interact();
         }
-
-        var interactDistance = 2f;
-        if (Physics.Raycast(transform.position, _lastInteractionDir, out var raycastHit, interactDistance,
-                counterLayerMask))
-        {
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
-            {
-                clearCounter.Interact();
-            }
-        }
-
-        ;
     }
 
     private void HandleInteractions()
@@ -67,10 +66,20 @@ public class CMPlayer : MonoBehaviour
         {
             if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
             {
+                if (clearCounter != _selectedCounter)
+                {
+                    SetSelectedCounter(clearCounter);
+                }
+            }
+            else
+            {
+                SetSelectedCounter(null);
             }
         }
-
-        ;
+        else
+        {
+            SetSelectedCounter(null);
+        }
     }
 
     private void HandleMovement()
@@ -114,5 +123,17 @@ public class CMPlayer : MonoBehaviour
 
         var rotateSpeed = 10f;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
+    }
+
+    private void SetSelectedCounter(ClearCounter selectedCounter)
+    {
+        _selectedCounter = selectedCounter;
+        OnSelectedCounterChanged?.Invoke(this,
+            new OnSelectedCounterChangedEventArgs { SelectedCounter = _selectedCounter });
+    }
+
+    public class OnSelectedCounterChangedEventArgs : EventArgs
+    {
+        public ClearCounter SelectedCounter;
     }
 }
