@@ -2,16 +2,18 @@ using System;
 using TotokisUtils.Utils;
 using UnityEngine;
 
-public class CMPlayer : MonoBehaviour
+public class CMPlayer : MonoBehaviour, IKitchenObjectParent
 {
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask counterLayerMask;
+    [SerializeField] private Transform kitchenObjectHoldPoint;
 
 
     private bool _isWalking;
+    private KitchenItem _kitchenItem;
     private Vector3 _lastInteractionDir;
-    private ClearCounter _selectedCounter;
+    private BaseCounter _selectedCounter;
     public static CMPlayer Instance { get; private set; }
 
     private void Awake()
@@ -35,9 +37,34 @@ public class CMPlayer : MonoBehaviour
         HandleInteractions();
     }
 
+    public void ClearKitchenItem()
+    {
+        _kitchenItem = null;
+    }
+
+    public KitchenItem GetKitchenItem()
+    {
+        return _kitchenItem;
+    }
+
+    public Transform GetKitchenItemFollowTransform()
+    {
+        return kitchenObjectHoldPoint;
+    }
+
+    public bool HasKitchenObject()
+    {
+        return _kitchenItem != null;
+    }
+
     public bool IsWalking()
     {
         return _isWalking;
+    }
+
+    public void SetKitchenItem(KitchenItem kitchenItem)
+    {
+        _kitchenItem = kitchenItem;
     }
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
@@ -46,7 +73,7 @@ public class CMPlayer : MonoBehaviour
     {
         if (_selectedCounter)
         {
-            _selectedCounter.Interact();
+            _selectedCounter.Interact(this);
         }
     }
 
@@ -64,11 +91,11 @@ public class CMPlayer : MonoBehaviour
         if (Physics.Raycast(transform.position, _lastInteractionDir, out var raycastHit, interactDistance,
                 counterLayerMask))
         {
-            if (raycastHit.transform.TryGetComponent(out ClearCounter clearCounter))
+            if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {
-                if (clearCounter != _selectedCounter)
+                if (baseCounter != _selectedCounter)
                 {
-                    SetSelectedCounter(clearCounter);
+                    SetSelectedCounter(baseCounter);
                 }
             }
             else
@@ -125,7 +152,7 @@ public class CMPlayer : MonoBehaviour
         transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
 
-    private void SetSelectedCounter(ClearCounter selectedCounter)
+    private void SetSelectedCounter(BaseCounter selectedCounter)
     {
         _selectedCounter = selectedCounter;
         OnSelectedCounterChanged?.Invoke(this,
@@ -134,6 +161,6 @@ public class CMPlayer : MonoBehaviour
 
     public class OnSelectedCounterChangedEventArgs : EventArgs
     {
-        public ClearCounter SelectedCounter;
+        public BaseCounter SelectedCounter;
     }
 }

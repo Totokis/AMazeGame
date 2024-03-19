@@ -25,6 +25,7 @@ public class GameInput : MonoBehaviour
 
     public event EventHandler OnInteractAction;
 
+
     private void InteractOnPerformed(InputAction.CallbackContext obj)
     {
         OnInteractAction?.Invoke(this, EventArgs.Empty);

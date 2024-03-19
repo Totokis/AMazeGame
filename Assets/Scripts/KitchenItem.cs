@@ -3,12 +3,7 @@ using UnityEngine;
 public class KitchenItem : MonoBehaviour
 {
     [SerializeField] private KitchenItemSO kitchenItem;
-    private ClearCounter _clearCounter;
-
-    public ClearCounter GetClearCounter()
-    {
-        return _clearCounter;
-    }
+    private IKitchenObjectParent _kitchenObjectParent;
 
 
     public KitchenItemSO GetKitchenItemSO()
@@ -16,8 +11,28 @@ public class KitchenItem : MonoBehaviour
         return kitchenItem;
     }
 
-    public void SetClearCounter(ClearCounter clearCounter)
+    public IKitchenObjectParent GetKitchenObjectParent()
     {
-        _clearCounter = clearCounter;
+        return _kitchenObjectParent;
+    }
+
+    public void SetKitchenObjectParent(IKitchenObjectParent kitchenObjectParent)
+    {
+        if (_kitchenObjectParent != null)
+        {
+            _kitchenObjectParent.ClearKitchenItem();
+        }
+
+        _kitchenObjectParent = kitchenObjectParent;
+
+        if (kitchenObjectParent.HasKitchenObject())
+        {
+            Debug.LogError("IKitchenObjectParent already has a KitchenItem");
+        }
+
+        kitchenObjectParent.SetKitchenItem(this);
+
+        transform.parent = kitchenObjectParent.GetKitchenItemFollowTransform();
+        transform.localPosition = Vector3.zero;
     }
 }
