@@ -52,7 +52,7 @@ public class CMPlayer : MonoBehaviour, IKitchenObjectParent
         return kitchenObjectHoldPoint;
     }
 
-    public bool HasKitchenObject()
+    public bool HasKitchenItem()
     {
         return _kitchenItem != null;
     }

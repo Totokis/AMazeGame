@@ -25,7 +25,7 @@ public class KitchenItem : MonoBehaviour
 
         _kitchenObjectParent = kitchenObjectParent;
 
-        if (kitchenObjectParent.HasKitchenObject())
+        if (kitchenObjectParent.HasKitchenItem())
         {
             Debug.LogError("IKitchenObjectParent already has a KitchenItem");
         }

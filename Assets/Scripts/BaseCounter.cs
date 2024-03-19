@@ -21,7 +21,7 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
         return counterTopPoint;
     }
 
-    public bool HasKitchenObject()
+    public bool HasKitchenItem()
     {
         return _kitchenItem != null;
     }
