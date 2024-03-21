@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace TotokisUtils.Utils
+namespace TotokisToolBox.Utils
 {
     public static class IntExtensions
     {

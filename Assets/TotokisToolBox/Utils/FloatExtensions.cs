@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TotokisUtils.Utils
+namespace TotokisToolBox.Utils
 {
     public static class FloatExtensions
     {

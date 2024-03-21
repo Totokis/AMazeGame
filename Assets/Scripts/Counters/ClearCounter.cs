@@ -1,22 +1,25 @@
-public class ClearCounter : BaseCounter
+namespace Counters
 {
-    public override void Interact(CMPlayer player)
+    public class ClearCounter : BaseCounter
     {
-        if (HasKitchenItem() == false)
+        public override void Interact(CMPlayer player)
         {
-            if (player.HasKitchenItem())
+            if (HasKitchenItem() == false)
             {
-                player.GetKitchenItem().SetKitchenObjectParent(this);
-            }
-        }
-        else
-        {
-            if (player.HasKitchenItem())
-            {
+                if (player.HasKitchenItem())
+                {
+                    player.GetKitchenItem().SetKitchenObjectParent(this);
+                }
             }
             else
             {
-                GetKitchenItem().SetKitchenObjectParent(player);
+                if (player.HasKitchenItem())
+                {
+                }
+                else
+                {
+                    GetKitchenItem().SetKitchenObjectParent(player);
+                }
             }
         }
     }

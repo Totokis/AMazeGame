@@ -1,10 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu]
-public class CuttingRecipeItemSO : ScriptableObject
+namespace ScriptableObjects
 {
-    public KitchenItemSO input;
-    public KitchenItemSO output;
+    [CreateAssetMenu]
+    public class CuttingRecipeItemSO : ScriptableObject
+    {
+        public KitchenItemSO input;
+        public KitchenItemSO output;
 
-    public int cuttingProgressMax;
+        public int cuttingProgressMax;
+    }
 }

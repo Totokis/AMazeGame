@@ -1,43 +1,46 @@
 using UnityEngine;
 
-public class BaseCounter : MonoBehaviour, IKitchenObjectParent
+namespace Counters
 {
-    [SerializeField] private Transform counterTopPoint;
-
-    private KitchenItem _kitchenItem;
-
-    public void ClearKitchenItem()
+    public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     {
-        _kitchenItem = null;
-    }
+        [SerializeField] private Transform counterTopPoint;
 
-    public KitchenItem GetKitchenItem()
-    {
-        return _kitchenItem;
-    }
+        private KitchenItem _kitchenItem;
 
-    public Transform GetKitchenItemFollowTransform()
-    {
-        return counterTopPoint;
-    }
+        public void ClearKitchenItem()
+        {
+            _kitchenItem = null;
+        }
 
-    public bool HasKitchenItem()
-    {
-        return _kitchenItem != null;
-    }
+        public KitchenItem GetKitchenItem()
+        {
+            return _kitchenItem;
+        }
 
-    public virtual void Interact(CMPlayer cmPlayer)
-    {
-        Debug.LogError("BaseCounter.Interact()");
-    }
+        public Transform GetKitchenItemFollowTransform()
+        {
+            return counterTopPoint;
+        }
 
-    public virtual void InteractAlternate(CMPlayer player)
-    {
-        Debug.LogError("BaseCounter.InteractAlternate()");
-    }
+        public bool HasKitchenItem()
+        {
+            return _kitchenItem != null;
+        }
 
-    public void SetKitchenItem(KitchenItem kitchenItem)
-    {
-        _kitchenItem = kitchenItem;
+        public virtual void Interact(CMPlayer cmPlayer)
+        {
+            Debug.LogError("BaseCounter.Interact()");
+        }
+
+        public virtual void InteractAlternate(CMPlayer player)
+        {
+            Debug.LogError("BaseCounter.InteractAlternate()");
+        }
+
+        public void SetKitchenItem(KitchenItem kitchenItem)
+        {
+            _kitchenItem = kitchenItem;
+        }
     }
 }

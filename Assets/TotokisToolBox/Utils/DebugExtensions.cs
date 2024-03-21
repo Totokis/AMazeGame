@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Utils
+namespace TotokisToolBox.Utils
 {
     public static class DebugExtensions
     {

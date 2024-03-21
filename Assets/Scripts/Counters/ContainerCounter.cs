@@ -1,18 +1,22 @@
 using System;
+using ScriptableObjects;
 using UnityEngine;
 
-public class ContainerCounter : BaseCounter
+namespace Counters
 {
-    [SerializeField] private KitchenItemSO kitchenItemSO;
-
-    public override void Interact(CMPlayer player)
+    public class ContainerCounter : BaseCounter
     {
-        if (player.HasKitchenItem() == false)
-        {
-            KitchenItem.SpawnKitchenObject(kitchenItemSO, player);
-            OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
-        }
-    }
+        [SerializeField] private KitchenItemSO kitchenItemSO;
 
-    public event EventHandler OnPlayerGrabbedObject;
+        public override void Interact(CMPlayer player)
+        {
+            if (player.HasKitchenItem() == false)
+            {
+                KitchenItem.SpawnKitchenObject(kitchenItemSO, player);
+                OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler OnPlayerGrabbedObject;
+    }
 }

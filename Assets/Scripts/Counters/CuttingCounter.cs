@@ -1,90 +1,94 @@
 using System;
+using ScriptableObjects;
 using UnityEngine;
 
-public class CuttingCounter : BaseCounter
+namespace Counters
 {
-    [SerializeField] private CuttingRecipeItemSO[] cutKitchenItemSOArray;
-
-    private int _cuttingProgress;
-
-    public override void Interact(CMPlayer player)
+    public class CuttingCounter : BaseCounter
     {
-        if (HasKitchenItem() == false)
+        [SerializeField] private CuttingRecipeItemSO[] cutKitchenItemSOArray;
+
+        private int _cuttingProgress;
+
+        public override void Interact(CMPlayer player)
         {
-            if (player.HasKitchenItem())
+            if (HasKitchenItem() == false)
             {
-                if (HasRecipeWithInput(player.GetKitchenItem().GetKitchenItemSO()))
+                if (player.HasKitchenItem())
                 {
-                    player.GetKitchenItem().SetKitchenObjectParent(this);
-                    _cuttingProgress = 0;
+                    if (HasRecipeWithInput(player.GetKitchenItem().GetKitchenItemSO()))
+                    {
+                        player.GetKitchenItem().SetKitchenObjectParent(this);
+                        _cuttingProgress = 0;
 
-                    var cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenItem().GetKitchenItemSO());
+                        var cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenItem().GetKitchenItemSO());
 
-                    OnProgressChanged?.Invoke(this,
-                        new OnProgressChangedEventArgs
-                            { progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
+                        OnProgressChanged?.Invoke(this,
+                            new OnProgressChangedEventArgs
+                                { progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
+                    }
                 }
-            }
-        }
-        else
-        {
-            if (player.HasKitchenItem())
-            {
             }
             else
             {
-                GetKitchenItem().SetKitchenObjectParent(player);
+                if (player.HasKitchenItem())
+                {
+                }
+                else
+                {
+                    GetKitchenItem().SetKitchenObjectParent(player);
+                }
             }
         }
-    }
 
-    public override void InteractAlternate(CMPlayer player)
-    {
-        if (HasKitchenItem() && HasRecipeWithInput(GetKitchenItem().GetKitchenItemSO()))
+        public override void InteractAlternate(CMPlayer player)
         {
-            _cuttingProgress++;
-            var cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenItem().GetKitchenItemSO());
-            OnCut?.Invoke(this, EventArgs.Empty);
-            OnProgressChanged?.Invoke(this,
-                new OnProgressChangedEventArgs
-                    { progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
-
-            if (_cuttingProgress >= cuttingRecipeSO.cuttingProgressMax)
+            if (HasKitchenItem() && HasRecipeWithInput(GetKitchenItem().GetKitchenItemSO()))
             {
-                var input = GetKitchenItem().GetKitchenItemSO();
-                GetKitchenItem().DestroySelf();
-                KitchenItem.SpawnKitchenObject(GetOutputForInput(input), this);
+                _cuttingProgress++;
+                var cuttingRecipeSO = GetCuttingRecipeSOWithInput(GetKitchenItem().GetKitchenItemSO());
+                OnCut?.Invoke(this, EventArgs.Empty);
+                OnProgressChanged?.Invoke(this,
+                    new OnProgressChangedEventArgs
+                        { progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
+
+                if (_cuttingProgress >= cuttingRecipeSO.cuttingProgressMax)
+                {
+                    var input = GetKitchenItem().GetKitchenItemSO();
+                    GetKitchenItem().DestroySelf();
+                    KitchenItem.SpawnKitchenObject(GetOutputForInput(input), this);
+                }
             }
         }
-    }
 
-    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
-    public event EventHandler OnCut;
+        public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
+        public event EventHandler OnCut;
 
-    private CuttingRecipeItemSO GetCuttingRecipeSOWithInput(KitchenItemSO input)
-    {
-        foreach (var recipeItemSO in cutKitchenItemSOArray)
-            if (recipeItemSO.input == input)
-            {
-                return recipeItemSO;
-            }
+        private CuttingRecipeItemSO GetCuttingRecipeSOWithInput(KitchenItemSO input)
+        {
+            foreach (var recipeItemSO in cutKitchenItemSOArray)
+                if (recipeItemSO.input == input)
+                {
+                    return recipeItemSO;
+                }
 
-        return null;
-    }
+            return null;
+        }
 
-    private bool HasRecipeWithInput(KitchenItemSO input)
-    {
-        return GetCuttingRecipeSOWithInput(input) != null;
-    }
+        private bool HasRecipeWithInput(KitchenItemSO input)
+        {
+            return GetCuttingRecipeSOWithInput(input) != null;
+        }
 
-    private KitchenItemSO GetOutputForInput(KitchenItemSO input)
-    {
-        var recipeItemSO = GetCuttingRecipeSOWithInput(input);
-        return recipeItemSO != null ? recipeItemSO.output : null;
-    }
+        private KitchenItemSO GetOutputForInput(KitchenItemSO input)
+        {
+            var recipeItemSO = GetCuttingRecipeSOWithInput(input);
+            return recipeItemSO != null ? recipeItemSO.output : null;
+        }
 
-    public class OnProgressChangedEventArgs : EventArgs
-    {
-        public float progressNormalized;
+        public class OnProgressChangedEventArgs : EventArgs
+        {
+            public float progressNormalized;
+        }
     }
 }
