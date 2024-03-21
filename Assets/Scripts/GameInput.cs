@@ -12,6 +12,7 @@ public class GameInput : MonoBehaviour
         _playerInputActions.Player.Enable();
 
         _playerInputActions.Player.Interact.performed += InteractOnPerformed;
+        _playerInputActions.Player.InteractAlternate.performed += InteractAlternateOnPerformed;
     }
 
     public Vector2 GetMovementVectorNormalized()
@@ -23,7 +24,13 @@ public class GameInput : MonoBehaviour
         return inputVector;
     }
 
+    private void InteractAlternateOnPerformed(InputAction.CallbackContext obj)
+    {
+        OnInteractAlternateAction?.Invoke(this, EventArgs.Empty);
+    }
+
     public event EventHandler OnInteractAction;
+    public event EventHandler OnInteractAlternateAction;
 
 
     private void InteractOnPerformed(InputAction.CallbackContext obj)

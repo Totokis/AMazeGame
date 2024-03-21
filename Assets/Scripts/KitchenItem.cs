@@ -6,6 +6,12 @@ public class KitchenItem : MonoBehaviour
     private IKitchenObjectParent _kitchenObjectParent;
 
 
+    public void DestroySelf()
+    {
+        _kitchenObjectParent.ClearKitchenItem();
+        Destroy(gameObject);
+    }
+
     public KitchenItemSO GetKitchenItemSO()
     {
         return kitchenItem;
@@ -34,5 +40,13 @@ public class KitchenItem : MonoBehaviour
 
         transform.parent = kitchenObjectParent.GetKitchenItemFollowTransform();
         transform.localPosition = Vector3.zero;
+    }
+
+    public static KitchenItem SpawnKitchenObject(KitchenItemSO kitchenItemSO, IKitchenObjectParent parent)
+    {
+        var kitchenItemTransform = Instantiate(kitchenItemSO.prefab);
+        var kitchenItem = kitchenItemTransform.GetComponent<KitchenItem>();
+        kitchenItem.SetKitchenObjectParent(parent);
+        return kitchenItem;
     }
 }

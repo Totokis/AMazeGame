@@ -29,6 +29,7 @@ public class CMPlayer : MonoBehaviour, IKitchenObjectParent
     private void Start()
     {
         gameInput.OnInteractAction += GameInputOnOnInteractAction;
+        gameInput.OnInteractAlternateAction += GameInputOnOnInteractAlternateAction;
     }
 
     private void Update()
@@ -65,6 +66,14 @@ public class CMPlayer : MonoBehaviour, IKitchenObjectParent
     public void SetKitchenItem(KitchenItem kitchenItem)
     {
         _kitchenItem = kitchenItem;
+    }
+
+    private void GameInputOnOnInteractAlternateAction(object sender, EventArgs e)
+    {
+        if (_selectedCounter)
+        {
+            _selectedCounter.InteractAlternate(this);
+        }
     }
 
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
