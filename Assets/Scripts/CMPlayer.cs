@@ -123,7 +123,8 @@ public class CMPlayer : MonoBehaviour, IKitchenObjectParent
         if (!canMove)
         {
             var moveDirX = moveDir.x.ToVector3X().normalized;
-            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight,
+            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position,
+                transform.position + Vector3.up * playerHeight,
                 playerRadius, moveDirX, moveDistance);
             if (canMove)
             {
@@ -132,7 +133,8 @@ public class CMPlayer : MonoBehaviour, IKitchenObjectParent
             else
             {
                 var moveDirZ = moveDir.z.ToVector3Z().normalized;
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight,
+                canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position,
+                    transform.position + Vector3.up * playerHeight,
                     playerRadius, moveDirZ, moveDistance);
                 if (canMove)
                 {
