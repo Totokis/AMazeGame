@@ -25,7 +25,7 @@ namespace Counters
 
                         OnProgressChanged?.Invoke(this,
                             new OnProgressChangedEventArgs
-                                { progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
+                                { ProgressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace Counters
                 OnCut?.Invoke(this, EventArgs.Empty);
                 OnProgressChanged?.Invoke(this,
                     new OnProgressChangedEventArgs
-                        { progressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
+                        { ProgressNormalized = (float)_cuttingProgress / cuttingRecipeSO.cuttingProgressMax });
 
                 if (_cuttingProgress >= cuttingRecipeSO.cuttingProgressMax)
                 {
@@ -88,7 +88,7 @@ namespace Counters
 
         public class OnProgressChangedEventArgs : EventArgs
         {
-            public float progressNormalized;
+            public float ProgressNormalized;
         }
     }
 }

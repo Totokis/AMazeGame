@@ -23,8 +23,8 @@ public class ProgressBarUI : MonoBehaviour
 
     private void CuttingCounterOnOnProgressChanged(object sender, CuttingCounter.OnProgressChangedEventArgs e)
     {
-        barImage.fillAmount = e.progressNormalized;
-        if (e.progressNormalized == 0f || e.progressNormalized == 1f)
+        barImage.fillAmount = e.ProgressNormalized;
+        if (e.ProgressNormalized == 0f || e.ProgressNormalized == 1f)
         {
             Hide();
         }
