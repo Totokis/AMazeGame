@@ -95,6 +95,7 @@ MonoBehaviour:
   counterTopPoint: {fileID: 4038228731590259424}
   fryingRecipeSoArray:
   - {fileID: 11400000, guid: 3b8e9b6479dae5347850640ce03ea860, type: 2}
+  burningRecipeSoArray: []
 --- !u!4 &6086093796754953352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 353466645953547581, guid: 25167d5c165cb94468f532bdf092cac4, type: 3}
@@ -109,11 +110,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 6086093796754953352}
     m_Modifications:
     - target: {fileID: 496015676961670754, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1a0afd856a35421469b28b916116fd9c, type: 2}
     - target: {fileID: 568043644244199763, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1a0afd856a35421469b28b916116fd9c, type: 2}
     - target: {fileID: 4386361873462607087, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
@@ -189,7 +190,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8864449973679823643, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1a0afd856a35421469b28b916116fd9c, type: 2}
     m_RemovedComponents: []
@@ -314,6 +315,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4759489104883491790}
   m_SourcePrefab: {fileID: 100100000, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+--- !u!1 &3649094943609525139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5220305274835918574, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 8851279131287244157}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5001243531887061462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4589716710238282923, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
@@ -336,3 +342,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fcdaa6a3b954723bf2a165a010c1d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particles: {fileID: 3649094943609525139}
+  stoveRedField: {fileID: 8857249098026173466}
+  stoveCounter: {fileID: 6725632226436410038}
+--- !u!1 &8857249098026173466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 17251720544094567, guid: 93af8b85a17635f40a5b76ed82a86c18, type: 3}
+  m_PrefabInstance: {fileID: 8851279131287244157}
+  m_PrefabAsset: {fileID: 0}
